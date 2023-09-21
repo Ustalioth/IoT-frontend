@@ -1,0 +1,16 @@
+version: '3'
+services:
+  react:
+    container_name: front
+    build:
+      dockerfile: ./docker/react/dockerfile
+    image: 'iot-react:latest'
+    volumes:
+      - './:/app'
+    restart: unless-stopped
+    tty: true
+    networks:
+      - iot
+networks:
+  iot:
+    external: true
