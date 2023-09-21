@@ -1,0 +1,36 @@
+{
+    "action": {
+        "logout": "Log out",
+        "signin": "Sign in",
+        "signup": "Sign up"
+    },
+    "button": {
+        "exit": "Sortir"
+    },
+    "direction": {
+        "left": "Gauche",
+        "right": "Droite",
+        "backward": "Arrière",
+        "forward": "Avant",
+        "stop": "Arrêter"
+    },
+    "auth": {
+        "login": "Login",
+        "email": "Email",
+        "password": "Password",
+        "subscribe": "Subscribe"
+    },
+    "home": {
+        "title": "Home"
+    },
+    "dashboard": {
+        "title": "Dashboard"
+    },
+    "control": {
+        "title": "Control",
+        "instructions": "Use the arrows to control the car"
+    },
+    "profile": {
+        "title": "My account"
+    }
+}

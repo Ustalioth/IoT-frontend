@@ -1,0 +1,47 @@
+{
+    "action": {
+        "logout": "Log out",
+        "signin": "Sign in",
+        "logging_in": "Logging in...",
+        "signup": "Sign up",
+        "register": "Register",
+        "register_title": "Sign up now!"
+    },
+    "button": {
+        "exit": "Exit"
+    },
+    "movement": {
+        "left": "Left",
+        "right": "Right",
+        "backward": "Backward",
+        "forward": "Forward",
+        "stop": "Stop",
+        "exit": "Exit"
+    },
+    "auth": {
+        "email": "Email",
+        "password": "Password",
+        "login": "Sign in",
+        "login_title": "Login now!",
+        "fail": "Authentication failed. Please try again."
+    },
+    "home": {
+        "title": "Home"
+    },
+    "profile": {
+        "title": "My account"
+    },
+    "user": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "gender": "Gender",
+        "phone": "Phone",
+        "birthday": "Birthday",
+        "email": "Email",
+        "password": "Password",
+        "password_confirmation": "Password confirmation",
+        "locale": "Language",
+        "keep_logging": "Keep logging"
+    }
+    
+}
