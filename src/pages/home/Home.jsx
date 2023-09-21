@@ -23,11 +23,21 @@ const Home = () => {
 
     const handleGetRefreshToken = () => {
         AuthService.refreshToken()
+            .then(response => {
+                console.log(response)
+            })
+            .catch(err => console.log(err))
+        //const accessToken = rs?.content?.body?.credentials?.token;
+        //TokenService.updateLocalAccessToken(accessToken);
+        //dispatch(setUser({...user, token: accessToken}));
+        /*
+        AuthService.refreshToken()
             .then(({data}) => {
                 TokenService.updateLocalAccessToken(data.content.body.credentials.token)
                 dispatch(setUser({...user, token: data.content.body.credentials.token}));
             })
             .catch(err => console.log(err));
+        */
     }
 
     useEffect(() => {

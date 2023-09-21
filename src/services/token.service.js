@@ -1,7 +1,7 @@
 const TokenService = {
     getLocalRefreshToken: () => {
         const refreshToken = window.localStorage.getItem("refreshToken");
-        return refreshToken;
+        return JSON.parse(refreshToken);
     },
 
     updateLocalRefreshToken: (refreshToken) => {
@@ -10,7 +10,7 @@ const TokenService = {
  
     getLocalAccessToken: () => {
         const accessToken = window.localStorage.getItem("accessToken");
-        return accessToken;
+        return JSON.parse(accessToken);
     },
 
     updateLocalAccessToken: (accessToken) => {

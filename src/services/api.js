@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     (config) => {
         const token = TokenService.getLocalAccessToken();
         if (token) {
-            config.headers["Authorization"] = `Bearer ${token}`;
+            config.headers["Authorization"] = `Bearer ${token.replace(/['"]+/g, '')}`;
         }
         return config;
     },
@@ -37,9 +37,10 @@ instance.interceptors.response.use(
   
           try {
             const rs = await AuthService.refreshToken();
-            const { accessToken } = rs?.content?.body?.credentials?.token;
-            window.localStorage.setItem("accessToken", accessToken);
-            instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+            const { accessToken } = rs.content.body.credentials.token;
+            //window.localStorage.setItem("accessToken", accessToken);
+            TokenService.updateLocalAccessToken(accessToken);
+            instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken.replace(/['"]+/g, '')}`;
   
             return instance(originalConfig);
           } catch (_error) {
