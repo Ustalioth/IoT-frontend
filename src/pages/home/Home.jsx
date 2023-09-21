@@ -10,6 +10,7 @@ import VideoFrame from "components/video/video-frame";
 import Chat from "components/chat/Chat";
 import { logout, setUser } from "features/authSlice";
 import AuthService from "services/auth.service";
+import Pusher from 'pusher-js';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -20,6 +21,23 @@ const Home = () => {
     const user = useSelector((state) => state.auth.user);
 
     const [chat, setChat] = useState([]);
+
+    const [messages, setMessages] = useState([]);
+
+    const pusher = new Pusher('3f4cfee58cf9b6395df8', {
+        cluster: 'eu'
+    });
+
+    useEffect(() => {
+        const channel = pusher.subscribe('obstacle'); // Replace with your channel name
+        channel.bind('obstacle', (data) => {
+            alert('OBSTACLE !!!!!')
+        });
+
+        return () => {
+            channel.unbind(); // Unsubscribe when the component unmounts
+        };
+    }, []);
 
     const handleGetRefreshToken = () => {
         AuthService.refreshToken()
