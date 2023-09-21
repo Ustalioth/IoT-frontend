@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import imageCover from "assets/auto.jpg";
 import AuthService from "services/auth.service";
@@ -9,6 +10,7 @@ import TokenService from "services/token.service";
 
 const Login = () => {
 
+    const navigate = useNavigate();
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const Login = () => {
     const loading = useSelector((state) => state.auth.loading);
     const error = useSelector((state) => state.auth.error);
 
-    const [credentials, setCredentials] = useState({"email": "", "password": ""});
+    const [credentials, setCredentials] = useState({email: "", password: ""});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,16 +29,22 @@ const Login = () => {
         e.preventDefault();
         dispatch(setLoading(true));
         AuthService.login(credentials)
-            .then(response => {
-                dispatch(setUser(response?.content?.body));
-                if (response?.content?.body?.credentials?.token) {
-                    TokenService.updateLocalAccessToken(response?.content?.body?.credentials?.token);
-                    TokenService.updateLocalRefreshToken(response?.content?.body?.credentials?.refreshToken);
+            .then(({data}) => {
+                dispatch(setUser(data?.content?.body));
+                if (data?.content?.body?.credentials?.token) {
+                    TokenService.updateLocalAccessToken(data?.content?.body?.credentials?.token);
+                    TokenService.updateLocalRefreshToken(data?.content?.body?.credentials?.refreshToken);
                 }
             })
-            .catch(err => dispatch(setError(`${t('auth.fail')}, ${err}`)))
+            .catch(err => dispatch(setError(`${t('auth.fail')}`)))
             .finally(() => dispatch(setLoading(false)));
     }
+
+    useEffect(() => {
+        if (isAuthenticated && TokenService.isTokenValid(TokenService.getLocalAccessToken())) {
+            return navigate("/", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <>
@@ -65,6 +73,11 @@ const Login = () => {
                                 </button>
                                 {error && <p className="error">{error}</p>}   
                             </form>
+                            <hr />
+                            <h2>{t('action.register_now')}</h2>
+                            <button>
+                                <Link to={"/signup"}>{t('action.signup')}</Link>
+                            </button>
                         </div>
                     </div>
                 </div>

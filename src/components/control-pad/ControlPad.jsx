@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, SquareFill } from 'react-bootstrap-icons';
-//import MovementsService from "services/movements.service";
+import MovementsService from "services/movements.service";
 
 
 const ControlPad = (props) => {
@@ -10,27 +10,27 @@ const ControlPad = (props) => {
 
     const directionSwitch = {
         'Up': () => {
-            //MovementsService.moveForward();
+            MovementsService.moveForward();
             setChat([...chat, 'Me: Forward']);
         },
         'Down': () => {
-            //MovementsService.moveBackward();
+            MovementsService.moveBackward();
             setChat([...chat, 'Me: Backward']);
         },
         'Left': () => {
-            //MovementsService.moveLeft();
+            MovementsService.moveLeft();
             setChat([...chat, 'Me: Left']);
         },
         'Right': () => {
-            //MovementsService.moveRight();
+            MovementsService.moveRight();
             setChat([...chat, 'Me: Right']);
         },
         'Stop': () => {
-            //MovementsService.Stop();
+            MovementsService.Stop();
             setChat([...chat, 'Me: Stop']);
         },
         'default': () => {
-            //MovementsService.Stop();
+            MovementsService.Stop();
         }
     }
 

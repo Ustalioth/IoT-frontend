@@ -2,35 +2,47 @@
     "action": {
         "logout": "Log out",
         "signin": "Sign in",
-        "signup": "Sign up"
+        "logging_in": "Logging in...",
+        "signup": "Sign up",
+        "register": "Register",
+        "register_title": "Sign up",
+        "register_now": "Not a member yet? Register now!"
     },
     "button": {
-        "exit": "Sortir"
+        "exit": "Exit"
     },
-    "direction": {
-        "left": "Gauche",
-        "right": "Droite",
-        "backward": "Arrière",
-        "forward": "Avant",
-        "stop": "Arrêter"
+    "movement": {
+        "left": "Left",
+        "right": "Right",
+        "backward": "Backward",
+        "forward": "Forward",
+        "stop": "Stop",
+        "exit": "Exit"
     },
     "auth": {
-        "login": "Login",
         "email": "Email",
         "password": "Password",
-        "subscribe": "Subscribe"
+        "login": "Sign in",
+        "login_title": "Login now!",
+        "fail": "Authentication failed. Please try again."
     },
     "home": {
-        "title": "Home"
-    },
-    "dashboard": {
-        "title": "Dashboard"
-    },
-    "control": {
-        "title": "Control",
-        "instructions": "Use the arrows to control the car"
+        "title": "Accueil"
     },
     "profile": {
         "title": "My account"
+    },
+    "user": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "gender": "Gender",
+        "phone": "Phone",
+        "birthday": "Birthday",
+        "email": "Email",
+        "password": "Password",
+        "password_confirmation": "Password confirmation",
+        "locale": "Language",
+        "keep_logging": "Keep logging"
     }
+    
 }

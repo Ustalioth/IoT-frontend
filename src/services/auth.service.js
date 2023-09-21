@@ -4,13 +4,14 @@ import TokenService from "./token.service";
 
 const AuthService = {
     login: (credentials) => {
-        const headers = {
-            'Content-Type': 'application/json',
-        }
         return axios.post(
             `${process.env.REACT_APP_URL}/api/accounts/sign-in`,
             credentials,
-            { headers}
+            {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                }
+            }
         )
     },
 
@@ -28,10 +29,11 @@ const AuthService = {
     refreshToken: async () => {
         return await axios.post(
             process.env.REACT_APP_URL + "/api/accounts/refresh-token",
+            {},
             {
-                'headers': {
-                    'Authorization': `Bearer ${TokenService.getLocalRefreshToken()}`,
+                headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${TokenService.getLocalRefreshToken()}`,
                 }
             }
         )

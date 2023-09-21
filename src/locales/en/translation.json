@@ -5,7 +5,8 @@
         "logging_in": "Logging in...",
         "signup": "Sign up",
         "register": "Register",
-        "register_title": "Sign up now!"
+        "register_title": "Sign up",
+        "register_now": "Not a member yet? Register now!"
     },
     "button": {
         "exit": "Exit"

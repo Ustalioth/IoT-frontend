@@ -26,7 +26,7 @@ const Register = () => {
     return (
         <>
             <h1>{t('action.register_title')}</h1>
-            {errMsg?.length && <Alert variant="danger">{errMsg}</Alert>}
+            {(errMsg?.length > 0) && <Alert variant="danger">{errMsg}</Alert>}
             <form>
                 <UserForm user={user} setUser={setUser} />
                 <button onClick={handleSubmit}>{t('action.register')}</button>

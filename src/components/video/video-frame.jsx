@@ -21,7 +21,7 @@ const VideoFrame = () => {
             <h3>Video stream</h3>
             <video ref={videoRef} controls autoPlay />
             {
-                errMsg?.length && <p>{errMsg}</p>
+                (errMsg?.length > 0) && <p>{errMsg}</p>
             }
         </Container>
     );

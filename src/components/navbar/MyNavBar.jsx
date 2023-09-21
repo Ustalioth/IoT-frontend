@@ -1,41 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { logout } from "features/authSlice";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 const MyNavBar = () => {
     const location = useLocation();
-    const { t } = useTranslation();
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
+    
     const [url, setUrl] = useState(null);
 
     const isActivePath = (currentPath, path) => currentPath === path ? "active" : "";
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate(`/signin`, { replace: true });
+    }
 
     useEffect(() => {
         setUrl(location.pathname);
     }, [location]);
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary"  bg="dark" data-bs-theme="dark">
+        <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="/">FantastiCar</Navbar.Brand>
+                <Navbar.Brand>FantastiCar</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" defaultActiveKey="/">
-                        <Nav.Link as={Link} to="/" className={isActivePath(url, '/')}>Home</Nav.Link>
-                        <Nav.Link as={Link} to="/dashboard" className={isActivePath(url, '/dashboard')}>
-                            {t('dashboard.title')}
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/control" className={isActivePath(url, '/control')}>
-                            {t('control.title')}
+                        <NavDropdown title="Lang" id="basic-nav-dropdown">
+                            <NavDropdown.Item onClick={() => i18n.changeLanguage('en')}>EN</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => i18n.changeLanguage('fr')}>FR</NavDropdown.Item>
+                        </NavDropdown>
+                        <Nav.Link as={Link} to="/" className={isActivePath(url, '/')}>
+                            {t('home.title')}
                         </Nav.Link>
                         <Nav.Link as={Link} to="/account" className={isActivePath(url, '/account')}>
                             {t('profile.title')}
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/logout" className={isActivePath(url, '/')}>
+                        <Nav.Link onClick={ handleLogout } className={isActivePath(url, '/')}>
                             {t('logout')}
                         </Nav.Link>
                     </Nav>
