@@ -1,12 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import VideoService from "services/video.service";
+import Pusher from "pusher-js";
 
 const VideoFrame = () => {
 
     const videoRef = useRef();
 
     const [errMsg, setErrMsg] = useState('');
+
+    const pusher = new Pusher('3f4cfee58cf9b6395df8', {
+        cluster: 'eu'
+    });
+
+    useEffect(() => {
+        const channel = pusher.subscribe('image'); // Replace with your channel name
+        channel.bind('image', (data) => {
+            console.log(data)
+        });
+
+        return () => {
+            channel.unbind(); // Unsubscribe when the component unmounts
+        };
+    }, []);
 
     useEffect(() => {
         VideoService.getVideoStream()
