@@ -48,36 +48,39 @@ const Login = () => {
 
     return (
         <>
-            <div className="container border border-primary">
+            <h1 className="mb-4 text-center">FantastiCar</h1>
+            <div className="container h-100 d-flex justify-content-center align-items-center">
                 <div className="row">
-                    <div className="col-12 col-md-6">
+                    <div className="col-xs-12 col-md-6 d-none d-md-block">
                         <div className="d-flex align-items-center justify-content-center h-100">
                             <img src={imageCover} alt={t('auth.login_title')} className="h-100 mw-100" />
                         </div>
                     </div>
 
-                    <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
+                    <div className="col-xs-12 col-md-6 d-flex justify-content-center align-items-center">
                         <div className="h-100">
-                            <h1>{t('auth.login')}</h1>
+                            <h2 className="mb-4">{t('auth.login')}</h2>
                             <form onSubmit={handleSubmit}>
-                                <div>
-                                    <label>{t('auth.email')}:</label>
-                                    <input type="text" name="email" value={credentials.email || ''} onChange={handleChange} />
+                                <div className="form-outline mb-4">
+                                    <label className="form-label" htmlFor="email">{t('auth.email')}</label>
+                                    <input type="email" name="email" value={credentials.email || ''} onChange={handleChange} className="form-control" id="email" />
                                 </div>
-                                <div>
-                                    <label>{t('auth.password')}:</label>
-                                    <input type="text" name="password" value={credentials.password || ''} onChange={handleChange} />
+                                <div className="form-outline mb-4">
+                                    <label className="form-label" htmlFor="password">{t('auth.password')}</label>
+                                    <input type="password" name="password" value={credentials.password || ''} onChange={handleChange} className="form-control" id="password" />
                                 </div>
-                                <button type="submit" disabled={loading}>
+                                <button type="submit" className="btn btn-primary btn-block mb-4" disabled={loading}>
                                     {loading ?  t('action.logging_in') : t('action.signin')}
                                 </button>
                                 {error && <p className="error">{error}</p>}   
                             </form>
                             <hr />
                             <h2>{t('action.register_now')}</h2>
-                            <button>
-                                <Link to={"/signup"}>{t('action.signup')}</Link>
-                            </button>
+                            <Link to={"/signup"}>
+                                <button type="button" className="btn btn-primary btn-block mb-4">
+                                    {t('action.signup')}
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

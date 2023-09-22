@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import AuthService from "services/auth.service";
 
 
 const MyNavBar = () => {
@@ -21,6 +22,7 @@ const MyNavBar = () => {
 
     const handleLogout = () => {
         dispatch(logout());
+        AuthService.logout();
         navigate(`/signin`, { replace: true });
     }
 
@@ -45,7 +47,7 @@ const MyNavBar = () => {
                         <Nav.Link as={Link} to="/account" className={isActivePath(url, '/account')}>
                             {t('profile.title')}
                         </Nav.Link>
-                        <Nav.Link onClick={ handleLogout } className={isActivePath(url, '/')}>
+                        <Nav.Link onClick={ handleLogout }>
                             {t('logout')}
                         </Nav.Link>
                     </Nav>

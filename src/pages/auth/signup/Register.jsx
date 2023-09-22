@@ -17,20 +17,22 @@ const Register = () => {
         AuthService.signup(user)
             .then(response => {
                 setErrMsg('');
-
             })
             .catch(err => setErrMsg(err));
-        //console.log(user);
     };
 
     return (
         <>
-            <h1>{t('action.register_title')}</h1>
-            {(errMsg?.length > 0) && <Alert variant="danger">{errMsg}</Alert>}
-            <form>
-                <UserForm user={user} setUser={setUser} />
-                <button onClick={handleSubmit}>{t('action.register')}</button>
-            </form>
+            <h1 className="text-center">{t('action.register_title')}</h1>
+            <div className="container">
+                {(errMsg?.length > 0) && <Alert variant="danger">{errMsg}</Alert>}
+                <form onSubmit={handleSubmit}>
+                    <UserForm user={user} setUser={setUser} />
+                    <div className="container text-center">
+                        <button type="button" className="btn btn-primary btn-block">{t('action.register')}</button>
+                    </div>
+                </form>
+            </div>
         </>
     );
 }

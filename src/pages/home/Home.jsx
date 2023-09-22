@@ -5,11 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import TokenService from "services/token.service";
 import MyNavBar from "components/navbar/MyNavBar";
 import ControlPad from "components/control-pad/ControlPad";
-import { Container } from "react-bootstrap";
 import VideoFrame from "components/video/video-frame";
 import Chat from "components/chat/Chat";
-import { logout, setUser } from "features/authSlice";
-import AuthService from "services/auth.service";
+import { logout } from "features/authSlice";
 import Pusher from 'pusher-js';
 
 const Home = () => {
@@ -18,11 +16,8 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const user = useSelector((state) => state.auth.user);
 
     const [chat, setChat] = useState([]);
-
-    const [messages, setMessages] = useState([]);
 
     const pusher = new Pusher('3f4cfee58cf9b6395df8', {
         cluster: 'eu'
@@ -37,46 +32,30 @@ const Home = () => {
         return () => {
             channel.unbind(); // Unsubscribe when the component unmounts
         };
-    }, []);
-
-    const handleGetRefreshToken = () => {
-        AuthService.refreshToken()
-            .then(response => {
-                console.log(response)
-            })
-            .catch(err => console.log(err))
-        //const accessToken = rs?.content?.body?.credentials?.token;
-        //TokenService.updateLocalAccessToken(accessToken);
-        //dispatch(setUser({...user, token: accessToken}));
-        /*
-        AuthService.refreshToken()
-            .then(({data}) => {
-                TokenService.updateLocalAccessToken(data.content.body.credentials.token)
-                dispatch(setUser({...user, token: data.content.body.credentials.token}));
-            })
-            .catch(err => console.log(err));
-        */
-    }
+    });
 
     useEffect(() => {
-        /*
         if (!isAuthenticated || !TokenService.isTokenValid(TokenService.getLocalRefreshToken())) {
             dispatch(logout);
             return navigate("/signin", { replace: true });
         }
-        */
-    }, []);
+    });
 
     return (
         <>
             <MyNavBar />
-            <h1>{t('home.title')}</h1>
-            <Container className="d-flex">
-                <VideoFrame />
-                <ControlPad chat={chat} setChat={setChat} />
-            </Container>
+            <h1 className="text-center">{t('home.title')}</h1>
+            <div className="container">
+                <div className="row d-flex justify-content-center align-items-center">
+                    <div className="col-12 col-md-6 text-center">
+                        <VideoFrame />
+                    </div>
+                    <div className="col-12 col-md-6 text-center">
+                        <ControlPad chat={chat} setChat={setChat} />
+                    </div>
+                </div>
+            </div>
             <Chat content={chat} setContent={setChat} />
-            <button onClick={handleGetRefreshToken}>get a refresh token test</button>
         </>
     );
 }

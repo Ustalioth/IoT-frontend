@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import React, { useState, useEffect, useRef } from "react";
 
 
 const Chat = (props) => {
@@ -11,6 +10,23 @@ const Chat = (props) => {
         setText(e.target.value);
     }
 
+    const textareaRef = useRef(null);
+
+  useEffect(() => {
+    scrollToBottom(); // Call this when the component initially mounts
+  }, []);
+
+  useEffect(() => {
+    // Scroll to the bottom whenever new lines are added
+    scrollToBottom();
+  }, [content]);
+
+    const scrollToBottom = () => {
+        if (textareaRef.current) {
+          textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+        }
+      };
+
     const handleSubmit = () => {
         if (text.length) {
             setContent([...content, `Me : ${text}`]);
@@ -19,15 +35,24 @@ const Chat = (props) => {
     }
 
     return (
-        <>
-            <Container className="border border-secondary h-50">
-                {content?.slice(-5)?.map(item => <p key={item?.movementId}>{item}</p>)}
-            </Container>
-            
-                <input type="text" value={text} onChange={(e) => handleChangeText(e)} />
-                <button onClick={handleSubmit}>Submit</button>
-            
-        </>
+        <div className="container">
+            <div className="form-group">
+                <label htmlFor="exampleTextarea">Battle chat</label>
+                <textarea 
+                    id="exampleTextarea" 
+                    rows={5}
+                    className="form-control border border-info" 
+                    disabled
+                    value={content.join('\n')}
+                    ref={textareaRef}
+                />
+                
+                <div className="d-flex">
+                    <input type="text" value={text} onChange={(e) => handleChangeText(e)} className="form-control" />
+                    <button onClick={handleSubmit} className="btn btn-primary btn-block">Submit</button>
+                </div>
+            </div>
+        </div>
     );
 }
 

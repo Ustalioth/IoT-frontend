@@ -2,10 +2,11 @@ import axios from "axios";
 import TokenService from "./token.service";
 import AuthService from "./auth.service";
 
+
 export const instance = axios.create({
     baseURL: process.env.REACT_APP_URL + "/api",
     headers: {
-        "Content-Type": "application/json",
+      "Content-Type": "application/json",
     },
     timeout: 5000,
 });
@@ -14,7 +15,7 @@ instance.interceptors.request.use(
     (config) => {
         const token = TokenService.getLocalAccessToken();
         if (token) {
-            config.headers["Authorization"] = `Bearer ${token.replace(/['"]+/g, '')}`;
+            config.headers["Authorization"] = `Bearer ${token}`;
         }
         return config;
     },
@@ -37,10 +38,9 @@ instance.interceptors.response.use(
   
           try {
             const rs = await AuthService.refreshToken();
-            const { accessToken } = rs.content.body.credentials.token;
-            //window.localStorage.setItem("accessToken", accessToken);
-            TokenService.updateLocalAccessToken(accessToken);
-            instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken.replace(/['"]+/g, '')}`;
+            const token = rs.data.content.body.credentials.token;
+            TokenService.updateLocalAccessToken(token)
+            instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   
             return instance(originalConfig);
           } catch (_error) {
@@ -60,5 +60,3 @@ instance.interceptors.response.use(
       return Promise.reject(err);
     }
 );
-
-export default instance;
