@@ -46,6 +46,10 @@ const Login = () => {
         }
     }, [isAuthenticated, navigate]);
 
+    useEffect(() => {
+        dispatch(setError(''));
+    }, [dispatch]);
+
     return (
         <>
             <h1 className="mb-4 text-center">FantastiCar</h1>
@@ -72,7 +76,7 @@ const Login = () => {
                                 <button type="submit" className="btn btn-primary btn-block mb-4" disabled={loading}>
                                     {loading ?  t('action.logging_in') : t('action.signin')}
                                 </button>
-                                {error && <p className="error">{error}</p>}   
+                                {(error?.length > 0) && <div class="alert alert-danger" role="alert">{error}</div>}   
                             </form>
                             <hr />
                             <h2>{t('action.register_now')}</h2>

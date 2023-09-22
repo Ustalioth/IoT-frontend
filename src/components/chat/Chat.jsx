@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import MovementsService from "services/movements.service";
 
 
 const Chat = (props) => {
@@ -12,27 +13,70 @@ const Chat = (props) => {
 
     const textareaRef = useRef(null);
 
-  useEffect(() => {
-    scrollToBottom(); // Call this when the component initially mounts
-  }, []);
-
-  useEffect(() => {
-    // Scroll to the bottom whenever new lines are added
-    scrollToBottom();
-  }, [content]);
-
     const scrollToBottom = () => {
-        if (textareaRef.current) {
-          textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+      if (textareaRef.current) {
+        textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+      }
+    };
+
+    const directionSwitch = {
+      'forward': () => {
+          MovementsService.moveForward();
+      },
+      'backward': () => {
+          MovementsService.moveBackward();
+      },
+      'left': () => {
+          MovementsService.moveLeft();
+      },
+      'right': () => {
+          MovementsService.moveRight();
+      },
+      'stop': () => {
+          MovementsService.Stop();
+      },
+      'default': () => {
+          MovementsService.Stop();
+      }
+    }
+
+    const highlightCommand = (inputText) => {
+      const commands = ['right', 'left', 'forward', 'backward', 'stop', 'exit'];
+      
+      let highlighted = inputText;
+      commands.forEach(command => {
+        const regex = new RegExp(`(${command})`, 'ig');
+        highlighted = highlighted.replace(regex, '[ $1 ]');
+      });
+
+      const regexBrackets = /\[([^[\]]+)\]/g;
+      const matchedCommands = highlighted.match(regexBrackets);
+
+      if (matchedCommands && matchedCommands.length > 0) {
+        const firstMatch = matchedCommands[0].slice(1, -1).trim().toLowerCase();
+        if (firstMatch?.length) {
+          (directionSwitch[firstMatch] || directionSwitch['default'])();
         }
-      };
+      }
+      
+      return highlighted;
+    }
 
     const handleSubmit = () => {
-        if (text.length) {
-            setContent([...content, `Me : ${text}`]);
-            setText('');
-        }
+      if (text.length) {
+          setContent([...content, `Me : ${highlightCommand(text)}`]);
+          setText('');
+      }
     }
+
+    useEffect(() => {
+      scrollToBottom(); // Call this when the component initially mounts
+    }, []);
+
+    useEffect(() => {
+      // Scroll to the bottom whenever new lines are added
+      scrollToBottom();
+    }, [content]);
 
     return (
         <div className="container">
