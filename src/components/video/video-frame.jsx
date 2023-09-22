@@ -14,8 +14,9 @@ const VideoFrame = () => {
 
     useEffect(() => {
         const channel = pusher.subscribe('image'); // Replace with your channel name
-        channel.bind('image', (data) => {
-            console.log(data)
+        channel.bind('image', async (data) => {
+            const image = await axios.get("https://backend.groupe2.learn-it.ovh/api/images/latest")
+            console.log(image)
             setVideo(data);
         });
 
