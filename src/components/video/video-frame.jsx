@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import Pusher from "pusher-js";
+import axios from 'axios';
 
 const VideoFrame = () => {
 
@@ -16,8 +17,8 @@ const VideoFrame = () => {
         const channel = pusher.subscribe('image'); // Replace with your channel name
         channel.bind('image', async (data) => {
             const image = await axios.get("https://backend.groupe2.learn-it.ovh/api/images/latest")
-            console.log(image)
-            setVideo(data);
+            console.log(image.data.content.body.image)
+            setVideo(image.data.content.body.image);
         });
 
         return () => {
@@ -25,22 +26,12 @@ const VideoFrame = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const blob = new Blob([video], { type: 'video/mp4' });
-        const url = window.URL.createObjectURL(blob);
-        videoRef.current.src = url;
-
-        return () => {
-            URL.revokeObjectURL(url);
-          };
-    }, [video]);
-
     return (
         <Container>
             <h3>Video stream</h3>
-            <video ref={videoRef} controls autoPlay>
-                Your browser does not support the video tag.
-            </video>
+            {
+                video ? (<img src={`data:image/jpeg;base64,${video}`} alt='test'/>)  : (<></>)
+            }
         </Container>
     );
 }
